@@ -1,0 +1,2 @@
+# wordpress-sveltekit
+Headless wordpress

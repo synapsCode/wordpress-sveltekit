@@ -1,25 +1,17 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
-
-
-// export const load: PageLoad = ({ params }) => {
-// 	return {
-// 		post: {
-// 			title: `Title for ${params.slug} goes here`,
-// 			content: `Content for ${params.slug} goes here`
-// 		}
-// 	};
-// };
+import type { ApiResponse } from '$lib/models/api-response';
 
 
 export const load: PageServerLoad = async ({ fetch }) => {
-	let url ="https://tyskfotball.com/wp-json/custom/v1/posts?per_page=5&page=1";
+	let url ="https://tyskfotball.com/wp-json/custom/v1/posts?per_page=1&page=1";
 	try{
 		const response = await fetch(url);
 		if(!response.ok){
 			throw new Error('Failed to fetch data');
 		}
 		const data = await response.json();
+		console.log('Data fetched successfully:', data);
 		return{
 			posts:data
 		}

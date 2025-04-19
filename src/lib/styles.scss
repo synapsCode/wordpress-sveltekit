@@ -1,0 +1,19 @@
+
+@use "bulma/sass/utilities/initial-variables";
+@use "bulma/sass/grid/grid";
+@use "bulma/sass/grid/columns";
+@use "bulma/sass/helpers/gap";
+@use "bulma/sass/layout/section" with (
+  $section-padding: 3rem,
+  $section-padding-desktop: 4.5rem
+);
+@use "bulma/sass/helpers/typography";
+img{
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: auto 16 / 9;
+}
+:root{
+
+}
+$grid-gap: 3rem;

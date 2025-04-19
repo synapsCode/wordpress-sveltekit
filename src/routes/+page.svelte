@@ -4,23 +4,23 @@
     import { onMount } from 'svelte';
 
     let { data }: PageProps = $props();
-    let posts: ApiResponse['data']['posts'] = data.posts.data.posts;
-    let currentPage = 1;
-    let isLoading = false;
+    let posts: ApiResponse['data']['posts'] = $state(data.posts.data.posts);
+    let currentPage = $state(data.page);
+    let postPerPage = $state(data.perPage);
+    let isLoading = $state(false);
     let hasMorePosts = true; //sprawdzamy czy są jeszcze posty ale to nie ma znaczenia
-    console.log('Initial posts:', posts);
+    console.log('Initial posts:', data.page, data.page);
     async function loadMorePosts() {
         if (isLoading || !hasMorePosts) return;
         isLoading = true;
         console.log('Loading more posts...', isLoading);
-        // https://tyskfotball.com/wp-json/custom/v1/posts?per_page=${perPage}&page=${page}
         try {
             const response = await fetch(`https://tyskfotball.com/wp-json/custom/v1/posts?per_page=5&page=${currentPage + 1}`);
             console.log('Loading more posts from page:', response);
             if (!response.ok) {
                 throw new Error('Failed to load more posts');
             }
-
+            //parsowanie odpowiedzi
             const newData: ApiResponse = await response.json();
             if (newData.data.posts.length === 0) {
                 hasMorePosts = false;
@@ -36,18 +36,6 @@
         console.log('Updated posts:', isLoading);
     }
 
-    function handleScroll() {
-        const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-        if (scrollTop + clientHeight >= scrollHeight - 100) {
-            loadMorePosts();
-        }
-    }
-
-    onMount(() => {
-        window.addEventListener('scroll', handleScroll);
-        console.log("Scroll event listener added");
-        return () => window.removeEventListener('scroll', handleScroll);
-    });
 </script>
 
 <h1>Welcome to SvelteKit</h1>
@@ -67,13 +55,10 @@
 </div>
 
 <h2>wad</h2>
-
-{#await true}
-    <div class="loading">
-        <p>Loading...</p>
-    </div>
-{:catch error}
-    <div class="error">
-        <p>Error: {error.message}</p>
-    </div> 
-{/await}
+<button on:click={loadMorePosts} disabled={isLoading}>
+    {#if isLoading}
+        Loading...
+    {:else}
+        Load more posts
+    {/if}
+</button>

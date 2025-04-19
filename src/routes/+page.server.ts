@@ -4,7 +4,7 @@ import type { ApiResponse } from '$lib/models/api-response';
 
 export const load: PageServerLoad = async ({ fetch, url: requestUrl }) => {
 	// Extract query parameters from the request URL
-	const perPage = requestUrl.searchParams.get('per_page') || '5';
+	const perPage = requestUrl.searchParams.get('per_page') || '6';
 	const page = requestUrl.searchParams.get('page') || '1';
 
 	// Construct the dynamic URL with user-provided parameters
@@ -18,7 +18,9 @@ export const load: PageServerLoad = async ({ fetch, url: requestUrl }) => {
 		const data = await response.json();
 		console.log('Data fetched successfully:', data);
 		return {
-			posts: data
+			posts: data,
+			perPage: perPage,
+			page:page
 		};
 	} catch {
 		console.error('Error fetching data:', error);

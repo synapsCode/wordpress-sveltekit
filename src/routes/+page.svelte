@@ -55,7 +55,7 @@
 </div>
 
 <h2>wad</h2>
-<button on:click={loadMorePosts} disabled={isLoading}>
+<button onclick={loadMorePosts} disabled={isLoading}>
     {#if isLoading}
         Loading...
     {:else}

@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { ApiResponse } from '$lib/models/api-response';
+    import {loadMorePosts} from '$lib/';
     import type { PageProps } from './$types';
     import { onMount } from 'svelte';
 
@@ -10,31 +11,7 @@
     let isLoading = $state(false);
     let hasMorePosts = true; //sprawdzamy czy są jeszcze posty ale to nie ma znaczenia
     console.log('Initial posts:', data.page, data.page);
-    async function loadMorePosts() {
-        if (isLoading || !hasMorePosts) return;
-        isLoading = true;
-        console.log('Loading more posts...', isLoading);
-        try {
-            const response = await fetch(`https://tyskfotball.com/wp-json/custom/v1/posts?per_page=5&page=${currentPage + 1}`);
-            console.log('Loading more posts from page:', response);
-            if (!response.ok) {
-                throw new Error('Failed to load more posts');
-            }
-            //parsowanie odpowiedzi
-            const newData: ApiResponse = await response.json();
-            if (newData.data.posts.length === 0) {
-                hasMorePosts = false;
-            } else {
-                posts = [...posts, ...newData.data.posts];
-                currentPage++;
-            }
-        } catch (error) {
-            console.error(error);
-        } finally {
-            isLoading = false;
-        }
-        console.log('Updated posts:', isLoading);
-    }
+    
 
 </script>
 
@@ -52,7 +29,7 @@
 </div>
 
 <h2>wad</h2>
-<button onclick={loadMorePosts} disabled={isLoading}>
+<button onclick={() => loadMorePosts()} disabled={isLoading}>
     {#if isLoading}
         Loading...
     {:else}

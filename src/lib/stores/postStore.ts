@@ -1,17 +1,15 @@
 import { writable, get } from  'svelte/store';
 
-
-export const posts = writable([]);
+//TODO: czy potrzebuje reaktywnej zmiany aby pobierać posty./
+export const posts = writable<any[]>([]);
 export const currentPage = writable(1);
 export const isLoading = writable(false);
 export const hasMorePosts = writable(true);
 
-console.log(isLoading);
-
 export async function loadMorePosts(categorySlug?: string){
+    
     if(get(isLoading) || !get(hasMorePosts)) return;
-    isLoading.set(false);
-
+    isLoading.set(true);
     try{
         const url = categorySlug ?
                     `https://tyskfotball.com/wp-json/custom/v1/posts?per_page=5&page=${get(currentPage) + 1}&category=${categorySlug}}` 
@@ -21,7 +19,8 @@ export async function loadMorePosts(categorySlug?: string){
         if(postData.data.posts.length === 0 ){
             hasMorePosts.set(false);
         }else{
-            posts.update((currentPage) => [...currentPage, ...postData.data.posts]);
+            posts.update((posts) => [...posts, ...postData.data.posts]);
+            currentPage.update((currentPage) => currentPage + 1);
         }
     }catch(error)
     {
@@ -29,6 +28,4 @@ export async function loadMorePosts(categorySlug?: string){
     }finally{
         isLoading.set(false);
     }
-
-
 }

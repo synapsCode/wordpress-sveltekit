@@ -1,36 +1,56 @@
 <script lang="ts">
-    import type { ApiResponse } from '$lib/models/api-response';
-    import {loadMorePosts} from '$lib/';
+    import { get } from  'svelte/store';
+    import { loadMorePosts, posts, currentPage, isLoading } from '$lib'; // Alias for /src/lib/index.js in SvelteKit
     import type { PageProps } from './$types';
-    import { onMount } from 'svelte';
+	import { onMount } from 'svelte';
+
+
+    console.log('Page props:', get(posts));
 
     let { data }: PageProps = $props();
-    let posts: ApiResponse['data']['posts'] = $state(data.posts.data.posts);
-    let currentPage = $state(data.page);
-    let postPerPage = $state(data.perPage);
-    let isLoading = $state(false);
-    let hasMorePosts = true; //sprawdzamy czy są jeszcze posty ale to nie ma znaczenia
-    console.log('Initial posts:', data.page, data.page);
-    
 
 </script>
 
-<div class="fixed-grid has-3-cols">
-    <div class="grid is-gap-4 is-gap-1">
-        {#each posts as item}
+<div class="fixed-grid has-3-cols has-1-cols-mobile has-2-cols-tablet has-2-cols-desktop has-3-cols-widescreen">
+
+    <div class="grid is-gap-4 is-gap-1 	">
+        {#if data.posts.isLoading}
+            <div class="cell">
+                <img src="/images/placeholder.png" alt="Loading..." class="skeleton-block"/>
+                <h2>Loading...</h2>
+                <p>Loading...</p>
+            </div>
+        {/if}
+        
+        {#if data.posts.error}
+            <div class="cell">
+                <p>Error loading posts: {data.posts.error}</p>
+            </div>
+        {/if}
+        {#each data.posts.data.posts as item}
             <div class="cell">
                 <img src={item.featured_image} alt={item.title} class="skeleton-block"/>
                 <h2>{item.title}</h2>
-                <p>{item.excerpt}</p>
-                <p>{@html item.excerpt}</p>
+                <!-- <p>{@html item.excerpt}</p> -->
             </div>
         {/each}
+            {#if get(posts) === 0}
+                <p>No posts found.</p>
+            {:else}
+                {#each $posts as post}
+                <div class="cell">
+                    <img src={post.featured_image} alt={post.title} class="skeleton-block"/>
+                    <h2>{post.title}</h2>
+                    <p>{post.excerpt}</p>
+                    <p>{@html post.excerpt}</p>
+                </div>
+            {/each} 
+            {/if}                   
     </div>  
 </div>
 
-<h2>wad</h2>
-<button onclick={() => loadMorePosts()} disabled={isLoading}>
-    {#if isLoading}
+<button onclick={() => loadMorePosts()}>
+    {#if $isLoading}
         Loading...
     {:else}
         Load more posts

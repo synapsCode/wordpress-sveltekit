@@ -1,12 +1,14 @@
 // Set your brand colors
+
 $yellow: #d0bf0b;
 @use "bulma/sass/utilities" with (
   $primary: $yellow,
 );
 @use "bulma/sass/base";
+@use "bulma/sass/components";
+@use "bulma/sass/elements";
+@use "bulma/sass/form";
 @use "bulma/sass/themes";
-
-
 @use "bulma/sass/grid/grid";
 @use "bulma/sass/grid/columns";
 @use "bulma/sass/helpers";

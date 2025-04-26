@@ -11,8 +11,16 @@
 
 </script>
 
-<div class="fixed-grid has-3-cols has-1-cols-mobile has-2-cols-tablet has-2-cols-desktop has-3-cols-widescreen">
+<svelte:head>
+  <title>Moja Strona Główna</title>
+  <meta property="og:title" content="Moja Strona Główna" />
+  <meta property="og:description" content="Witaj na mojej stronie! Znajdziesz tu wiele ciekawych postów." />
+  <meta property="og:image" content="https://mojastrona.pl/og-image.jpg" />
+  <meta property="og:url" content="https://mojastrona.pl/" />
+  <meta property="og:type" content="website" />
+</svelte:head>
 
+<main class="fixed-grid has-3-cols has-1-cols-mobile has-2-cols-tablet has-2-cols-desktop has-3-cols-widescreen">
     <div class="grid is-gap-4 is-gap-1 	">
         {#if data.posts.isLoading}
             <div class="cell">
@@ -34,7 +42,7 @@
                 <!-- <p>{@html item.excerpt}</p> -->
             </div>
         {/each}
-            {#if get(posts) === 0}
+            {#if get(posts).length === 0}
                 <p>No posts found.</p>
             {:else}
                 {#each $posts as post}
@@ -47,7 +55,7 @@
             {/each} 
             {/if}                   
     </div>  
-</div>
+</main>
 
 <button onclick={() => loadMorePosts()}>
     {#if $isLoading}

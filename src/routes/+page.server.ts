@@ -1,6 +1,5 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
-import type { ApiResponse } from '$lib/models/api-response';
 
 export const load: PageServerLoad = async ({ fetch, url: requestUrl }) => {
 	// Extract query parameters from the request URL
@@ -8,6 +7,7 @@ export const load: PageServerLoad = async ({ fetch, url: requestUrl }) => {
 	const page = requestUrl.searchParams.get('page') || '1';
 
 	// Construct the dynamic URL with user-provided parameters
+	//TODO: Add url env ask Agent
 	const url = `https://tyskfotball.com/wp-json/custom/v1/posts?per_page=${perPage}&page=${page}`;
 
 	try {

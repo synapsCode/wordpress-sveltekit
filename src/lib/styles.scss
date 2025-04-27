@@ -6,10 +6,12 @@ $yellow: #d0bf0b;
 );
 @use "bulma/sass/base";
 @use "bulma/sass/form";
+@use "bulma/sass/elements/button";
 @use "bulma/sass/themes";
 @use "bulma/sass/grid/grid";
 @use "bulma/sass/grid/columns";
 @use "bulma/sass/helpers";
+@use "bulma/sass/utilities/controls";
 @use "bulma/sass/layout" with (
   $section-padding: 3rem,
   $section-padding-desktop: 4.5rem,

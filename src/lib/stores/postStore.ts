@@ -21,6 +21,7 @@ export async function loadMorePosts(categorySlug?: string){
         }else{
             posts.update((posts) => [...posts, ...postData.data.posts]);
             currentPage.update((currentPage) => currentPage + 1);
+            console.log("posts", get(posts));
         }
     }catch(error)
     {

@@ -5,7 +5,7 @@
 
 <div class="pt-5 pb-5 has-background-black has-text-primary">
     <header class="container level is-mobile warning has-background-black">
-        <h1 class="level-item level-left">Tyskfo tball</h1>
+        <h1 class="level-item level-left"><a href="/">Tyskfo tball</a></h1>
         <nav class="menu">
             <!-- TODO: jak zrobic aby menu byla elementem statycznym a nie dynamicznym S -->
             <ul class="menu-list columns">

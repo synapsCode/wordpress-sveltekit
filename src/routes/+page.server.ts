@@ -3,7 +3,7 @@ import { error } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ fetch, url: requestUrl }) => {
 	// Extract query parameters from the request URL
-	const perPage = requestUrl.searchParams.get('per_page') || '6';
+	const perPage = requestUrl.searchParams.get('per_page') || '9';
 	const page = requestUrl.searchParams.get('page') || '1';
 
 	// Construct the dynamic URL with user-provided parameters

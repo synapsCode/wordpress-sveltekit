@@ -6,7 +6,7 @@ name: Build and deploy Node.js app to Azure Web App - sveltekit
 on:
   push:
     branches:
-      - main
+      - app
   workflow_dispatch:
 
 jobs:

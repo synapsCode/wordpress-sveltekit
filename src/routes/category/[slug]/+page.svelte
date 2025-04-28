@@ -1,63 +1,57 @@
 <script>
-    import { onMount } from 'svelte';
-    let {data} = $props();
-    // Example data fetching logic (replace with actual API call)
-    let posts = [];
-    let loading = $state(true);
-
-    // Simulate fetching posts for the given category slug
-    onMount(async () => {
-        try {
-            // Replace with your API call
-            const response = await fetch(`https://tyskfotball.com/wp-json/custom/v1/posts?per_page=5&page=1&category=${data.slug}`);
-            posts = await response.json();
-            console.log('Fetched posts:', posts);
-        } catch (error) {
-            console.error('Error fetching posts:', error);
-        } finally {
-            loading = false;
-        }
-    });
+	import { get } from 'svelte/store';
+	import { loadMorePosts, posts, isLoading, currentPage } from '$lib'; // Alias for /src/lib/index.js in SvelteKit
+	import PostCard from '$lib/components/layout/PostCard.svelte';
+	let { data } = $props();
+	// Example data fetching logic (replace with actual API call)
+	//TODO: czym się różńi $state od writable
+	console.log(data);
 </script>
 
-{#if loading}
-    <p>Loading...</p>
-{:else if posts.length === 0}
-    <p>No posts found for this category.</p>
-{:else}
-    <div>
-        <h1>Posts in category:</h1>
-        <ul>
-            {#each posts as post}
-                <li>
-                   <a>To jest wad</a>
-                </li>
-            {/each}
-        </ul>
-    </div>
-{/if}
+<svelte:head>
+	<title>Moja Strona Główna</title>
+	<meta property="og:title" content="Moja Strona Kategori" />
+	<meta
+		property="og:description"
+		content="Witaj na mojej stronie! Znajdziesz tu wiele ciekawych postów."
+	/>
+	<meta property="og:image" content="https://mojastrona.pl/og-image.jpg" />
+	<meta property="og:url" content="https://mojastrona.pl/" />
+	<meta property="og:type" content="website" />
+</svelte:head>
 
-<style>
-    h1 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
-
-    ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    li {
-        margin-bottom: 0.5rem;
-    }
-
-    a {
-        text-decoration: none;
-        color: #0070f3;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-</style>
+<main
+	class="fixed-grid has-3-cols has-1-cols-mobile has-2-cols-tablet has-2-cols-desktop has-3-cols-widescreen"
+>
+	<div class="grid is-gap-4 is-gap-1">
+		{#if data.error}
+			<div class="cell">
+				<p>Error loading posts: {data.error}</p>
+			</div>
+		{:else}
+			{#each data.posts.data.posts as post}
+				<PostCard {post} />
+			{/each}
+		{/if}
+		{#if $posts.length === 0 && $currentPage !== 1}
+			<p>No posts found.</p>
+		{:else}
+			{#each $posts as post}
+				<PostCard {post} />
+			{/each}
+		{/if}
+	</div>
+	{#if $isLoading}
+		<div class="cell">
+			<img src="/images/placeholder.png" alt="Loading..." class="skeleton-block" />
+			<h2>Loading...</h2>
+		</div>
+	{/if}
+	<button onclick={() => loadMorePosts()} class="button">
+		{#if $isLoading}
+			Loading...
+		{:else}
+			Load more posts
+		{/if}
+	</button>
+</main>

@@ -2,7 +2,6 @@ import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from './$types'
 
 export const load: PageServerLoad = async ({fetch, params}) => {
-    console.log(params);
 
     const url = `https://tyskfotball.com/wp-json/custom/v1/posts?per_page=5&page=1&category=${params.slug}}` ;
     try{

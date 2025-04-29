@@ -5,7 +5,6 @@
 	let { data } = $props();
 	// Example data fetching logic (replace with actual API call)
 	//TODO: czym się różńi $state od writable
-	console.log(data);
 </script>
 
 <svelte:head>

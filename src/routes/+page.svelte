@@ -5,7 +5,6 @@
 	import PostCard from '$lib/components/layout/PostCard.svelte';
 
     let { data }: PageProps = $props();
-    console.log(get(posts).length);
 </script>
 
 <svelte:head>

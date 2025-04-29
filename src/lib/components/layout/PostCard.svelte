@@ -1,6 +1,5 @@
 <script lang="ts">
     const {post} = $props();
-    console.log(post);
 </script>
 
 

@@ -7,7 +7,6 @@ export const load: PageServerLoad = async ({fetch, params}) => {
     try{
         const response = await fetch(url)
         const postData = await response.json();
-        console.log(url);
         return {
 			posts: postData,
 			// perPage: perPage,

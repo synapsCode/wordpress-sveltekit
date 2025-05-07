@@ -1,16 +1,17 @@
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from './$types'
+import {CMS_DOMAIN_ADRESS} from '$env/static/private';
 
 export const load: PageServerLoad = async ({fetch, params}) => {
 
-    const url = `https://tyskfotball.com/wp-json/custom/v1/posts?per_page=5&page=1&category=${params.slug}}` ;
+    const url = `${CMS_DOMAIN_ADRESS}/wp-json/custom/v1/posts?per_page=1&page=1&category=${params.slug}}`;
+
+    
     try{
         const response = await fetch(url)
         const postData = await response.json();
         return {
 			posts: postData,
-			// perPage: perPage,
-			// page:page
 		};
     }catch(e){
         return{

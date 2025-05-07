@@ -1,5 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
+import {CMS_DOMAIN_ADRESS} from '$env/static/private';
 import azureRedis from '$lib/server/redist';
 
 export const load: PageServerLoad = async ({ fetch, url: requestUrl }) => {
@@ -12,7 +13,7 @@ export const load: PageServerLoad = async ({ fetch, url: requestUrl }) => {
 	const page = requestUrl.searchParams.get('page') || '1';
 	// Construct the dynamic URL with user-provided parameters
 	//TODO: Add url env ask Agent
-	const url = `https://tyskfotball.com/wp-json/custom/v1/posts?per_page=${perPage}&page=${page}`;
+	const url = `${CMS_DOMAIN_ADRESS}/wp-json/custom/v1/posts?per_page=${perPage}&page=${page}`;
 
 	try {
 		if(azureRedis.status != 'ready'){

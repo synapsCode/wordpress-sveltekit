@@ -1,8 +1,17 @@
 import { Redis } from 'ioredis';
+import { AZURE_REDIS_PORT, AZURE_REDIS_HOST, AZURE_REDIS_KEY } from '$env/static/private';
+console.log(AZURE_REDIS_PORT, AZURE_REDIS_HOST, AZURE_REDIS_KEY);
 
-const azureRedis: Redis = new Redis({
-    host: process.env.REDIS_HOST,
-    port: process.env.AZURE_REDIS_PORT, // Default Redis port
+const azureRedis = new Redis({
+    host: AZURE_REDIS_HOST,
+    port: parseInt(AZURE_REDIS_PORT, 10),
+    password: AZURE_REDIS_KEY,
+    tls: {
+        rejectUnauthorized: false
+    }
 });
 
-export default Redis;
+azureRedis.on('error', (err) => console.error("Błąd połączenia", err.message));
+azureRedis.on('connect', () =>  console.log('Połączono z Azure Cache for Redis'));
+
+export default azureRedis;

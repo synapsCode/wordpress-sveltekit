@@ -5,11 +5,13 @@
 	let { data } = $props();
 	// Example data fetching logic (replace with actual API call)
 	//TODO: czym się różńi $state od writable
+	data.posts.data.posts.forEach(element => {
+		console.log(element);
+	});;
 </script>
-
 <svelte:head>
 	<title>Moja Strona Główna</title>
-	<meta property="og:title" content="Moja Strona Kategori" />
+	<meta property="og:title" content="Moja Strona Kategorii" />
 	<meta
 		property="og:description"
 		content="Witaj na mojej stronie! Znajdziesz tu wiele ciekawych postów."

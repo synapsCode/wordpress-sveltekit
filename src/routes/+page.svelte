@@ -18,8 +18,6 @@
 
 <main class="fixed-grid has-3-cols has-1-cols-mobile has-2-cols-tablet has-2-cols-desktop has-3-cols-widescreen">
     <div class="grid is-gap-4 is-gap-1 	">
-
-        
         {#if data.error}
             <div class="cell">
                 <p>Error loading posts: {data.error}</p>
@@ -29,6 +27,7 @@
                  <PostCard  post={post}/>
             {/each}
         {/if}
+        <!-- Load more posts -->
         {#if $posts.length === 0 && $currentPage !== 1  }
             <p>No posts found.</p>
         {:else}

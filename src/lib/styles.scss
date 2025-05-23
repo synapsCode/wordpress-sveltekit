@@ -5,6 +5,7 @@ $yellow: #d0bf0b;
   $primary: $yellow,
 );
 @use "bulma/sass/base";
+@use "bulma/sass/utilities/mixins";
 @use "bulma/sass/form";
 @use "bulma/sass/elements/button";
 @use "bulma/sass/themes";
@@ -23,3 +24,10 @@ img{
     aspect-ratio: auto 16 / 9;
 }
 $grid-gap: 3rem;
+
+
+
+
+@include mixins.from(1280px){
+
+}

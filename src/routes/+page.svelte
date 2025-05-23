@@ -1,7 +1,7 @@
 <script lang="ts">
     import { get } from  'svelte/store';
-    import { loadMorePosts, posts, isLoading, currentPage } from '$lib'; // Alias for /src/lib/index.js in SvelteKit
     import type { PageProps } from './$types';
+    import { loadMorePosts, posts, isLoading, currentPage } from '$lib'; // Alias for /src/lib/index.js in SvelteKit
 	import PostCard from '$lib/components/layout/PostCard.svelte';
 
     let { data }: PageProps = $props();

@@ -1,3 +1,12 @@
+<!--
+Sugestie:
+1. Rozważ wydzielenie logiki pobierania postów do osobnego store lub composable, aby uniknąć duplikacji kodu między stronami.
+2. Użyj komponentu do wyświetlania listy postów, aby kod był bardziej reużywalny.
+3. Dodaj obsługę paginacji lub przycisk "Załaduj więcej", jeśli chcesz ładować kolejne posty bez przeładowania strony.
+4. Rozważ obsługę błędów i wyświetlanie komunikatów użytkownikowi w przypadku problemów z API.
+5. Jeśli korzystasz z TypeScript, dodaj typowanie dla pobieranych danych (np. interfejs Post).
+-->
+
 <script>
 	import { get } from 'svelte/store';
 	import { loadMorePosts, posts, isLoading, currentPage } from '$lib'; // Alias for /src/lib/index.js in SvelteKit
